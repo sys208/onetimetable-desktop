@@ -1,0 +1,35 @@
+{
+  "name": "onetimetable-desktop",
+  "version": "0.1.0",
+  "main": "dist/main/index.js",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build:main": "bun build src/main/index.ts --outdir dist/main --target node --external electron && bun build src/main/preload.ts --outdir dist/main --target node --external electron",
+    "build:renderer": "bun build src/renderer/index.tsx --outdir dist/renderer --external electron",
+    "build:css": "bunx @tailwindcss/cli -i src/renderer/global.css -o dist/renderer/global.css",
+    "build": "bun run build:main && bun run build:renderer && bun run build:css && cp src/renderer/index.html dist/renderer/",
+    "start": "bun run build && electron dist/main/index.js",
+    "test": "bun test",
+    "dist": "bun run build && electron-builder"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.3.0",
+    "@types/bun": "latest",
+    "@types/react": "^19.2.15",
+    "@types/react-dom": "^19.2.3",
+    "electron": "^42.2.0",
+    "electron-builder": "^26.8.1",
+    "tailwindcss": "^4.3.0"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "firebase": "^12.13.0",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
+    "react-router-dom": "^7.15.1",
+    "zustand": "^5.0.13"
+  }
+}

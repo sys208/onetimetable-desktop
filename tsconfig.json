@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "noEmit": true,
+    "outDir": "dist",
+    "rootDir": "src",
+    "baseUrl": ".",
+    "paths": {
+      "@shared/*": ["src/shared/*"],
+      "@main/*": ["src/main/*"],
+      "@renderer/*": ["src/renderer/*"]
+    },
+    "types": ["bun"]
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx", "test/**/*.ts"],
+  "exclude": ["node_modules", "dist"]
+}
