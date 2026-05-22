@@ -13,3 +13,16 @@ body {
   display: flex;
   flex-direction: column;
 }
+
+.input-field {
+  padding: 6px 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 13px;
+  outline: none;
+  width: 100%;
+}
+
+.input-field:focus {
+  border-color: #3b82f6;
+}
