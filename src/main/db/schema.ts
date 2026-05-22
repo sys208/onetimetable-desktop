@@ -1,4 +1,7 @@
-import { Database } from "bun:sqlite";
+// DB 어댑터 인터페이스 - bun:sqlite와 better-sqlite3 모두 호환
+export interface DbLike {
+  exec(sql: string): void;
+}
 
 export const TABLES = [
   "settings",
@@ -33,7 +36,7 @@ export const TABLES = [
   "backups",
 ] as const;
 
-export function createAllTables(db: Database) {
+export function createAllTables(db: DbLike) {
   db.exec(`
     CREATE TABLE IF NOT EXISTS settings (
       id INTEGER PRIMARY KEY DEFAULT 1,

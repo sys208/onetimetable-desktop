@@ -20,7 +20,7 @@ export function registerIpcHandlers() {
   ipcMain.handle(IPC.DB_QUERY, (_event, sql: string, params?: unknown[]) => {
     try {
       const db = getDb();
-      const rows = db.query(sql).all(...(params || []));
+      const rows = db.prepare(sql).all(...(params || []));
       return { success: true, data: rows };
     } catch (error) {
       return { success: false, error: String(error) };
@@ -30,7 +30,7 @@ export function registerIpcHandlers() {
   ipcMain.handle(IPC.DB_EXECUTE, (_event, sql: string, params?: unknown[]) => {
     try {
       const db = getDb();
-      db.run(sql, ...(params || []));
+      db.prepare(sql).run(...(params || []));
       return { success: true };
     } catch (error) {
       return { success: false, error: String(error) };

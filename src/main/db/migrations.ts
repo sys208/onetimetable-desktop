@@ -1,6 +1,10 @@
-import { Database } from "bun:sqlite";
+import type { DbLike } from "./schema";
 
-export function runMigrations(db: Database) {
+interface MigrationDb extends DbLike {
+  prepare(sql: string): { all(): { name: string }[]; run(...params: unknown[]): void };
+}
+
+export function runMigrations(db: MigrationDb) {
   db.exec(`
     CREATE TABLE IF NOT EXISTS _migrations (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -10,13 +14,13 @@ export function runMigrations(db: Database) {
   `);
 
   const applied = new Set(
-    (db.query("SELECT name FROM _migrations").all() as { name: string }[]).map((r) => r.name)
+    db.prepare("SELECT name FROM _migrations").all().map((r) => r.name)
   );
 
   for (const migration of migrations) {
     if (!applied.has(migration.name)) {
       db.exec(migration.sql);
-      db.run("INSERT INTO _migrations (name) VALUES (?)", [migration.name]);
+      db.prepare("INSERT INTO _migrations (name) VALUES (?)").run(migration.name);
     }
   }
 }
