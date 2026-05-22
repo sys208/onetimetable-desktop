@@ -1,7 +1,11 @@
 import { app, BrowserWindow } from "electron";
 import path from "path";
+import { fileURLToPath } from "url";
 import { registerIpcHandlers } from "./ipc";
 import { closeDb } from "./db/connection";
+
+// Bun bundler가 __dirname을 소스 경로로 하드코딩하는 문제 회피
+const mainDir = path.dirname(fileURLToPath(import.meta.url));
 
 let mainWindow: BrowserWindow | null = null;
 
@@ -15,12 +19,14 @@ function createWindow() {
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
-      preload: path.join(__dirname, "preload.js"),
+      preload: path.join(mainDir, "preload.js"),
     },
   });
 
-  const rendererPath = path.join(__dirname, "..", "renderer", "index.html");
+  const rendererPath = path.join(mainDir, "..", "renderer", "index.html");
   mainWindow.loadFile(rendererPath);
+
+  mainWindow.webContents.openDevTools();
 
   mainWindow.on("closed", () => {
     mainWindow = null;
