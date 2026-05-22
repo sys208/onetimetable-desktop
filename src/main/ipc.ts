@@ -1,8 +1,22 @@
 import { ipcMain } from "electron";
 import { getDb } from "./db/connection";
+import { login, logout, getCurrentUser } from "./firebase/auth";
 import { IPC } from "../shared/constants";
 
 export function registerIpcHandlers() {
+  // Auth
+  ipcMain.handle(IPC.AUTH_LOGIN, async (_event, email: string, password: string) => {
+    return login(email, password);
+  });
+
+  ipcMain.handle(IPC.AUTH_LOGOUT, async () => {
+    return logout();
+  });
+
+  ipcMain.handle(IPC.AUTH_GET_USER, () => {
+    return { success: true, data: getCurrentUser() };
+  });
+
   ipcMain.handle(IPC.DB_QUERY, (_event, sql: string, params?: unknown[]) => {
     try {
       const db = getDb();
