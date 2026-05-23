@@ -6,6 +6,11 @@ const config: Configuration = {
   directories: {
     output: "release",
   },
+  publish: {
+    provider: "github",
+    owner: "sin-yeseong",
+    repo: "onetimetable-desktop",
+  },
   files: [
     "dist/**/*",
     "resources/**/*",
