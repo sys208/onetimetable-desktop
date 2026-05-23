@@ -38,9 +38,11 @@ const config: Configuration = {
   asarUnpack: [
     "node_modules/better-sqlite3/**/*",
   ],
+  icon: "resources/icon.png",
   mac: {
     target: ["dmg"],
     category: "public.app-category.education",
+    icon: "resources/icon.icns",
   },
   dmg: {
     title: "오늘시간표",
@@ -50,6 +52,7 @@ const config: Configuration = {
       { target: "nsis", arch: ["x64"] },
       { target: "msi", arch: ["x64"] },
     ],
+    icon: "resources/icon.ico",
   },
   nsis: {
     oneClick: true,
