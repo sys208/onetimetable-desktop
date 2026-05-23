@@ -8,7 +8,7 @@ const config: Configuration = {
   },
   publish: {
     provider: "github",
-    owner: "sin-yeseong",
+    owner: "sys208",
     repo: "onetimetable-desktop",
   },
   files: [
