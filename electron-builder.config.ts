@@ -6,13 +6,52 @@ const config: Configuration = {
   directories: {
     output: "release",
   },
-  files: ["dist/**/*", "resources/**/*"],
+  files: [
+    "dist/**/*",
+    "resources/**/*",
+    "node_modules/better-sqlite3/**/*",
+    "node_modules/bindings/**/*",
+    "node_modules/file-uri-to-path/**/*",
+    "node_modules/comcigan-parser/**/*",
+    "node_modules/iconv-lite/**/*",
+    "node_modules/cheerio/**/*",
+    "node_modules/htmlparser2/**/*",
+    "node_modules/dom-serializer/**/*",
+    "node_modules/domhandler/**/*",
+    "node_modules/domutils/**/*",
+    "node_modules/entities/**/*",
+    "node_modules/css-select/**/*",
+    "node_modules/css-what/**/*",
+    "node_modules/boolbase/**/*",
+    "node_modules/nth-check/**/*",
+    "node_modules/parse5/**/*",
+    "node_modules/parse5-htmlparser2-tree-adapter/**/*",
+    "node_modules/safer-buffer/**/*",
+  ],
+  asar: true,
+  asarUnpack: [
+    "node_modules/better-sqlite3/**/*",
+  ],
   mac: {
     target: ["dmg"],
     category: "public.app-category.education",
   },
+  dmg: {
+    title: "오늘시간표",
+  },
   win: {
-    target: ["nsis"],
+    target: [{ target: "nsis", arch: ["x64"] }],
+  },
+  nsis: {
+    oneClick: false,
+    allowToChangeInstallationDirectory: true,
+    createDesktopShortcut: true,
+    createStartMenuShortcut: true,
+    shortcutName: "오늘시간표",
+    language: "1042",
+  },
+  linux: {
+    target: ["AppImage"],
   },
 };
 
