@@ -46,7 +46,10 @@ const config: Configuration = {
     title: "오늘시간표",
   },
   win: {
-    target: [{ target: "nsis", arch: ["x64"] }],
+    target: [
+      { target: "nsis", arch: ["x64"] },
+      { target: "msi", arch: ["x64"] },
+    ],
   },
   nsis: {
     oneClick: true,
@@ -55,6 +58,11 @@ const config: Configuration = {
     shortcutName: "오늘시간표",
     uninstallDisplayName: "오늘시간표",
     deleteAppDataOnUninstall: false,
+    runAfterFinish: true,
+  },
+  msi: {
+    createDesktopShortcut: true,
+    createStartMenuShortcut: true,
     runAfterFinish: true,
   },
   linux: {
