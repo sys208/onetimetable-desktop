@@ -43,8 +43,8 @@ const config: Configuration = {
     target: [{ target: "nsis", arch: ["x64"] }],
   },
   nsis: {
-    oneClick: false,
-    allowToChangeInstallationDirectory: true,
+    oneClick: true,
+    allowToChangeInstallationDirectory: false,
     createDesktopShortcut: true,
     createStartMenuShortcut: true,
     shortcutName: "오늘시간표",

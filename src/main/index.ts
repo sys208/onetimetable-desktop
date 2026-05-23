@@ -3,8 +3,8 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { registerIpcHandlers } from "./ipc";
 import { closeDb } from "./db/connection";
+import { checkForUpdates } from "./updater";
 
-// Bun bundler가 __dirname을 소스 경로로 하드코딩하는 문제 회피
 const mainDir = path.dirname(fileURLToPath(import.meta.url));
 
 let mainWindow: BrowserWindow | null = null;
@@ -26,7 +26,10 @@ function createWindow() {
   const rendererPath = path.join(mainDir, "..", "renderer", "index.html");
   mainWindow.loadFile(rendererPath);
 
-  mainWindow.webContents.openDevTools();
+  // 개발 모드에서만 DevTools
+  if (!app.isPackaged) {
+    mainWindow.webContents.openDevTools();
+  }
 
   mainWindow.on("closed", () => {
     mainWindow = null;
@@ -35,7 +38,11 @@ function createWindow() {
 
 app.whenReady().then(() => {
   registerIpcHandlers();
-  createWindow();
+
+  // 업데이트 체크 → 없으면 메인 윈도우 생성
+  checkForUpdates(() => {
+    createWindow();
+  });
 
   app.on("activate", () => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
