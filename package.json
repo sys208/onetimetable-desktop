@@ -5,7 +5,7 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "build:main": "bun build src/main/index.ts --outdir dist/main --target node --external electron --external better-sqlite3 && bun build src/main/preload.ts --outdir dist/main --target node --external electron --format cjs",
+    "build:main": "bun build src/main/index.ts --outdir dist/main --target node --external electron --external better-sqlite3 --external comcigan-parser && bun build src/main/preload.ts --outdir dist/main --target node --external electron --format cjs",
     "build:renderer": "bun build src/renderer/index.tsx --outdir dist/renderer --external electron",
     "build:css": "bunx @tailwindcss/cli -i src/renderer/global.css -o dist/renderer/global.css",
     "build": "bun run build:main && bun run build:renderer && bun run build:css && cp src/renderer/index.html dist/renderer/",
@@ -29,6 +29,7 @@
   },
   "dependencies": {
     "better-sqlite3": "^12.10.0",
+    "comcigan-parser": "^1.0.0",
     "firebase": "^12.13.0",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
