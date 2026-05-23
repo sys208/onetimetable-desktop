@@ -67,7 +67,6 @@ const config: Configuration = {
     createDesktopShortcut: true,
     createStartMenuShortcut: true,
     runAfterFinish: true,
-    additionalWixArgs: ["-sval"],
   },
   linux: {
     target: ["AppImage"],
