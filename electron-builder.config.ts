@@ -3,6 +3,7 @@ import type { Configuration } from "electron-builder";
 const config: Configuration = {
   appId: "com.todayschooltimetable.desktop",
   productName: "오늘시간표",
+  copyright: "Copyright © 2026 오늘시간표",
   directories: {
     output: "release",
   },
@@ -49,11 +50,12 @@ const config: Configuration = {
   },
   nsis: {
     oneClick: true,
-    allowToChangeInstallationDirectory: false,
     createDesktopShortcut: true,
     createStartMenuShortcut: true,
     shortcutName: "오늘시간표",
-    language: "1042",
+    uninstallDisplayName: "오늘시간표",
+    deleteAppDataOnUninstall: false,
+    runAfterFinish: true,
   },
   linux: {
     target: ["AppImage"],

@@ -26,8 +26,9 @@ function createWindow() {
   const rendererPath = path.join(mainDir, "..", "renderer", "index.html");
   mainWindow.loadFile(rendererPath);
 
-  // 개발 모드에서만 DevTools
-  if (!app.isPackaged) {
+  // 개발 모드에서만 DevTools (환경변수로도 제어 가능)
+  const isDev = !app.isPackaged || process.env.NODE_ENV === "development";
+  if (isDev && process.argv.includes("--dev")) {
     mainWindow.webContents.openDevTools();
   }
 
