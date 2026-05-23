@@ -25,11 +25,12 @@ export function SelectorPanel({ type, onTypeChange, selectedId, onSelect }: Prop
     dbQuery<Room>("SELECT id, name FROM special_rooms ORDER BY id").then(setRooms);
   }, []);
 
+  // timetable 테이블에서 teacher_id는 teachers.id 숫자, class_id는 classes.name 문자열
   const items = type === "teacher"
     ? teachers.map((t) => ({ id: String(t.id), label: `${t.seq} ${t.name}`, hasNote: !!t.note }))
     : type === "class"
-    ? classes.map((c) => ({ id: String(c.id), label: c.name, hasNote: false }))
-    : rooms.map((r) => ({ id: String(r.id), label: r.name, hasNote: false }));
+    ? classes.map((c) => ({ id: c.name, label: c.name, hasNote: false }))
+    : rooms.map((r) => ({ id: r.name, label: r.name, hasNote: false }));
 
   return (
     <div className="w-32 bg-white border-r border-slate-200 flex flex-col shrink-0">
