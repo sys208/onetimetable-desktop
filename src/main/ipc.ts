@@ -1,9 +1,26 @@
 import { ipcMain } from "electron";
 import { getDb } from "./db/connection";
+import { insertDemoData } from "./db/demo-data";
 import { login, logout, getCurrentUser } from "./firebase/auth";
 import { IPC } from "../shared/constants";
+import { TABLES } from "./db/schema";
 
 export function registerIpcHandlers() {
+  // Demo
+  ipcMain.handle("demo:load", () => {
+    try {
+      const db = getDb();
+      // 기존 데이터 삭제
+      for (const table of TABLES) {
+        db.prepare(`DELETE FROM ${table}`).run();
+      }
+      insertDemoData(db);
+      return { success: true };
+    } catch (error) {
+      return { success: false, error: String(error) };
+    }
+  });
+
   // Auth
   ipcMain.handle(IPC.AUTH_LOGIN, async (_event, email: string, password: string) => {
     return login(email, password);

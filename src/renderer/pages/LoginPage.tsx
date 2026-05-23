@@ -1,8 +1,28 @@
 import { useState, type FormEvent } from "react";
 import { useAuthStore } from "../stores/authStore";
+import { ipcInvoke } from "../hooks/useIpc";
 
 export function LoginPage() {
   const { login, error, loading } = useAuthStore();
+  const store = useAuthStore;
+
+  async function enterDemo() {
+    // 데모 데이터 로드 IPC
+    await ipcInvoke("demo:load");
+    // 데모 유저로 바로 진입
+    store.setState({
+      user: {
+        id: "demo",
+        email: "demo@school.kr",
+        name: "홍길동",
+        role: "admin",
+        homeroom: "1-3",
+        specialRoom: null,
+        schoolId: "demo",
+      },
+      loading: false,
+    });
+  }
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [autoLogin, setAutoLogin] = useState(false);
@@ -66,7 +86,25 @@ export function LoginPage() {
           >
             {loading ? "로그인 중..." : "로그인"}
           </button>
+
+          <div className="relative flex items-center my-2">
+            <div className="flex-1 border-t border-slate-800" />
+            <span className="px-3 text-slate-600 text-[10px]">또는</span>
+            <div className="flex-1 border-t border-slate-800" />
+          </div>
+
+          <button
+            type="button"
+            onClick={enterDemo}
+            className="w-full bg-slate-800 text-slate-300 py-2.5 rounded-lg text-sm hover:bg-slate-700 border border-slate-700"
+          >
+            데모 모드로 체험하기
+          </button>
         </form>
+
+        <p className="text-center text-slate-600 text-[10px] mt-3">
+          데모 모드: 초지중학교 30학급, 교사 30명, 시간표 예시 데이터
+        </p>
       </div>
     </div>
   );
