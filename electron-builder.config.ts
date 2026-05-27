@@ -48,10 +48,7 @@ const config: Configuration = {
     title: "오늘시간표",
   },
   win: {
-    target: [
-      { target: "nsis", arch: ["x64"] },
-      { target: "msi", arch: ["x64"] },
-    ],
+    target: [{ target: "nsis", arch: ["x64"] }],
     icon: "resources/icon.ico",
   },
   nsis: {
