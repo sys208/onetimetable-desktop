@@ -1,5 +1,7 @@
 import { BrowserWindow, app } from "electron";
-import { autoUpdater } from "electron-updater";
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
+const { autoUpdater } = require("electron-updater");
 import path from "path";
 import { fileURLToPath } from "url";
 
